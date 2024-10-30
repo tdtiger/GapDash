@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private float timeRemaining;
     public GameObject timerText;
     public GameObject gameOverUI;
+    public GameObject resultText;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +46,8 @@ public class GameManager : MonoBehaviour
 
     private void GameClear(){
         gameOverUI.SetActive(true);
-        gameOverUI.GetComponent<TextMeshProUGUI>().text = "You Win!";
+        resultText.SetActive(true);
+        resultText.GetComponent<TextMeshProUGUI>().text = "You Win!";
         Time.timeScale = 0;
     }
 
