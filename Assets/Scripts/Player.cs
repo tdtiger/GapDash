@@ -6,7 +6,6 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private int moveSpeed;
-
     private Rigidbody2D rb;
 
     // Start is called before the first frame update

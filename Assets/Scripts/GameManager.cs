@@ -17,9 +17,12 @@ public class GameManager : MonoBehaviour
     }
 
     private float timeRemaining;
-    public GameObject timerText;
-    public GameObject gameOverUI;
-    public GameObject resultText;
+    [SerializeField]
+    private GameObject timerText;
+    [SerializeField]
+    private GameObject gameOverUI;
+    [SerializeField]
+    private GameObject resultText;
 
     // Start is called before the first frame update
     void Start()
@@ -50,5 +53,4 @@ public class GameManager : MonoBehaviour
         resultText.GetComponent<TextMeshProUGUI>().text = "You Win!";
         Time.timeScale = 0;
     }
-
 }
