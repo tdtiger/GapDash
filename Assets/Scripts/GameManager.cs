@@ -48,16 +48,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver(){
+    private void GameClear(){
+        // 結果表示画面をアクティブにし，"GAME CLEAR!"と表示
         gameOverUI.SetActive(true);
-        resultText.GetComponent<TextMeshProUGUI>().text = "GAME OVER...";
+        resultText.SetActive(true);
+        resultText.GetComponent<TextMeshProUGUI>().text = "GAME CLEAR!";
         Time.timeScale = 0;
     }
 
-    private void GameClear(){
+    public void GameOver(){
+        // 結果表示画面をアクティブにし，"GAME OVER..."と表示
         gameOverUI.SetActive(true);
-        resultText.SetActive(true);
-        resultText.GetComponent<TextMeshProUGUI>().text = "You Win!";
+        resultText.GetComponent<TextMeshProUGUI>().text = "GAME OVER...";
         Time.timeScale = 0;
     }
 }
