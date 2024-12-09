@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -28,6 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject countText;
 
+    private List<string> s = new List<string>();
+
     // ゲームオーバー用のUI
     [SerializeField]
     private GameObject gameOverUI;
@@ -40,13 +43,29 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Wall wall;
 
+    // タイトルボタン
+    [SerializeField]
+    private Button titleButton;
+
+    private Coroutine cr;
+
     // Start is called before the first frame update
     void Start()
     {
+        // いろいろ準備
+        Time.timeScale = 1;
+        titleButton.onClick.AddListener(MoveToTitle);
+        s.Add("5");
+        s.Add("4");
+        s.Add("3");
+        s.Add("2");
+        s.Add("1");
+        s.Add("START!!");
+
         // 残り時間を初期化し，結果表示画面を非アクティブ化
         timeRemaining = timeLimit;
         gameOverUI.SetActive(false);
-        Coroutine cr = StartCoroutine(CountDown());
+        cr = StartCoroutine(CountDown());
     }
 
     // Update is called once per frame
@@ -64,13 +83,11 @@ public class GameManager : MonoBehaviour
     }
 
     private IEnumerator CountDown(){
-        List<string> s[i] = ["5", "4", "3", "2", "1", "START!!"]
         // 1秒ごとにカウントダウン
-        for(int i = 0; i < 5; ++i){
+        for(int i = 0;i < 6; ++i){
             countText.GetComponent<TextMeshProUGUI>().text = s[i];
             yield return new WaitForSeconds(1f);
         }
-        // カウントダウン用のテキストを非表示に
         countText.SetActive(false);
 
         // 凸部分を生成し，動作開始
@@ -85,17 +102,24 @@ public class GameManager : MonoBehaviour
         timerText.GetComponent<TextMeshProUGUI>().text = "Time : " + Mathf.CeilToInt(timeRemaining).ToString();
     }
     private void GameClear(){
-        // 結果表示画面をアクティブにし，"GAME CLEAR!"と表示
+        // 結果表示画面をアクティブにし，"GAME CLEAR!"と表示，時間停止
         gameOverUI.SetActive(true);
         resultText.SetActive(true);
         resultText.GetComponent<TextMeshProUGUI>().text = "GAME CLEAR!";
         Time.timeScale = 0;
+        StopCoroutine(cr);
     }
 
     public void GameOver(){
-        // 結果表示画面をアクティブにし，"GAME OVER..."と表示
+        // 結果表示画面をアクティブにし，"GAME OVER..."と表示，時間停止
         gameOverUI.SetActive(true);
         resultText.GetComponent<TextMeshProUGUI>().text = "GAME OVER...";
         Time.timeScale = 0;
+        StopCoroutine(cr);
+    }
+
+    private void MoveToTitle(){
+        // タイトル画面に遷移
+        SceneManager.LoadScene("TitleScene");
     }
 }

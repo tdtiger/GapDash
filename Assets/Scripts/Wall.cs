@@ -75,7 +75,7 @@ public class Wall : MonoBehaviour
     public void SpawnProtrusion(){
         // 10 + 現在のレベル の数だけ突起を生成
         for(int i = 0; i < 10 + level; ++i){
-            if(i > protrusions.length){
+            if(i > 30){
                 break;
             }
 
@@ -88,7 +88,7 @@ public class Wall : MonoBehaviour
     private void DestroyProtrusion(){
         // 凸部分を全て削除
         for(int i = 0; i < 10 + level; ++i){
-            if(i > protrusions.length){
+            if(i > 30){
                 break;
             }
 
@@ -108,7 +108,7 @@ public class Wall : MonoBehaviour
 */
 
     private void UpdateLevel(){
-        2回に1回，レベルと壁の速度が上がる
+        // 2回に1回，レベルと壁の速度が上がる
         cnt += 1;
         if(cnt == 2){
             level += cnt;
