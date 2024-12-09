@@ -28,10 +28,22 @@ public class Wall : MonoBehaviour
         }
     }
 
+    private bool isMoving = false;
+    public bool IsMoving{
+        get{
+            return isMoving;
+        }
+        set{
+            isMoving = value;
+        }
+    }
+
     // 突起を格納する配列．現時点では最大20個に設定
-    private GameObject[] protrusions = new GameObject[20];
+    private GameObject[] protrusions = new GameObject[30];
     // 現在のレベル
     private int level = 1;
+
+    private int cnt = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +51,7 @@ public class Wall : MonoBehaviour
         startPos = this.transform.position;
         rb = this.GetComponent<Rigidbody2D>();
         tf = this.GetComponent<Transform>();
-        SpawnProtrusion();
+        //SpawnProtrusion();
     }
 
     // Update is called once per frame
@@ -47,7 +59,7 @@ public class Wall : MonoBehaviour
     {
         if(this.transform.position.y <= -1.5f)
             Move(wallSpeed);
-        else if(this.transform.position.y >= startPos.y){
+        else if(this.transform.position.y > startPos.y){
             Move(-wallSpeed);
             DestroyProtrusion();
             UpdateLevel();
@@ -55,7 +67,7 @@ public class Wall : MonoBehaviour
         }
     }
 
-    private void SpawnProtrusion(){
+    public void SpawnProtrusion(){
         // 10 + 現在のレベル の数だけ突起を生成
         for(int i = 0; i < 10 + level; ++i){
             float randomX = Random.Range(-8.4f, 8.4f);
@@ -79,7 +91,11 @@ public class Wall : MonoBehaviour
     }
 
     private void UpdateLevel(){
-        level += 1;
-        wallSpeed += 0.5f;
+        cnt += 1;
+        if(cnt == 2){
+            level += cnt;
+            wallSpeed += 0.15f;
+            cnt = 0;
+        }
     }
 }
