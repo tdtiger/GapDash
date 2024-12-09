@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
+    // 遷移のためのボタン群
     [SerializeField]
     private Button startButton;
 
@@ -15,9 +16,11 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     private Button exitButton;
 
+    // チュートリアル(遊び方)時の画像群
     [SerializeField]
     private List<GameObject> slides;
 
+    // 現時点でのページ
     private int page = 0;
 
     // Start is called before the first frame update
@@ -35,14 +38,17 @@ public class TitleManager : MonoBehaviour
     }
 
     private void StartGame(){
+        // ゲーム開始
         SceneManager.LoadScene("PlayScene");
     }
 
     private void ShowTutorial(){
+        // チュートリアル開始
         Debug.Log("Tutorial");
     }
 
     private void ExitGame(){
+        // ゲーム終了
         Application.Quit();
         Debug.Log("Game Exit");
     }

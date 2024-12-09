@@ -20,17 +20,23 @@ public class GameManager : MonoBehaviour
     // 残り時間
     private float timeRemaining;
 
+    // 残り時間用のテキスト
     [SerializeField]
     private GameObject timerText;
+
+    // カウントダウン用のテキスト
     [SerializeField]
     private GameObject countText;
 
+    // ゲームオーバー用のUI
     [SerializeField]
     private GameObject gameOverUI;
 
+    // 結果表示用のテキスト
     [SerializeField]
     private GameObject resultText;
 
+    // 天井(壁)
     [SerializeField]
     private Wall wall;
 
@@ -46,6 +52,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 動作中ならば，残り時間を更新
         if(wall.IsMoving == true){
             UpdateTimer();
         }
@@ -57,20 +64,16 @@ public class GameManager : MonoBehaviour
     }
 
     private IEnumerator CountDown(){
-        countText.GetComponent<TextMeshProUGUI>().text = "5";
-        yield return new WaitForSeconds(1f);
-        countText.GetComponent<TextMeshProUGUI>().text = "4";
-        yield return new WaitForSeconds(1f);
-        countText.GetComponent<TextMeshProUGUI>().text = "3";
-        yield return new WaitForSeconds(1f);
-        countText.GetComponent<TextMeshProUGUI>().text = "2";
-        yield return new WaitForSeconds(1f);
-        countText.GetComponent<TextMeshProUGUI>().text = "1";
-        yield return new WaitForSeconds(1f);
-        countText.GetComponent<TextMeshProUGUI>().text = "START!!";
-        yield return new WaitForSeconds(0.5f);
+        List<string> s[i] = ["5", "4", "3", "2", "1", "START!!"]
+        // 1秒ごとにカウントダウン
+        for(int i = 0; i < 5; ++i){
+            countText.GetComponent<TextMeshProUGUI>().text = s[i];
+            yield return new WaitForSeconds(1f);
+        }
+        // カウントダウン用のテキストを非表示に
         countText.SetActive(false);
 
+        // 凸部分を生成し，動作開始
         wall.SpawnProtrusion();
         wall.IsMoving = true;
         yield return null;
